@@ -975,11 +975,30 @@ def storeHTTPLine( http_str, log ) :
     return i
 
 
-
+#
+# @Prototype
+#   Function: storeHandler()
+#   Example:  storeHandler( h_str, log )
+#
+# @Purpose
+#   This function stores the  handler string into the given apache log
+#   object and returns the ending index of the parsed string
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       h_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
+#
 def storeHandler( h_str, log ) :
     (log.handler_str, i) = getString(h_str)
 
     return i
+
 
 #
 # @Prototype
