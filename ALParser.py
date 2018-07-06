@@ -38,23 +38,19 @@ class Parser:
 
     def parse(self, log_str ):
         i = 0
-        p = 0
+        d = 0
 
         log = ApacheLog()
 
-        for delim in self.delim_list:
-            print( delim, log_str[i:] )
-            if delim != log_str[i]:
-                parser = self.parser_list[p]
-
-                if parser[1] == '':
-                    i += parser[0](log_str[i:], log)
-                else:
-                    i += parser[0](log_str[i:], log, parser[1])
-
-                p += 1
-            else:
+        for parser in self.parser_list:
+            while d < len(self.delim_list) and self.delim_list[d] == log_str[i] :
                 i += 1
+                d += 1
+
+            if parser[1] == '':
+                i += parser[0](log_str[i:], log)
+            else:
+                i += parser[0](log_str[i:], log, parser[1])
 
         return log
 
@@ -546,8 +542,11 @@ isHTTPChar = lambda x : x == 'H' or x == 'T' or x == 'P' or (x > '-' and x < ':'
 #
 def storeHTTPLine( http_str, log) :
     (method_str, i) = getString(http_str)
-    (request_URI_str, i) = getString(http_str[i:])
-    (http_vers_str, i) = getString(http_str[i:], isHTTPChar)
+    i += 1
+    (request_URI_str, ii) = getString(http_str[i:])
+    i += ii + 1
+    (http_vers_str, ii) = getString(http_str[i:], isHTTPChar)
+    i += ii
 
     log.httpRequest = HTTPLine( method_str, request_URI_str, http_vers_str )
 
