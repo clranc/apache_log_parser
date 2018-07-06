@@ -101,21 +101,46 @@ class HTTPLine(ParseStruct):
 #   ApacheLog()
 #
 # @Purpose
-#   Class meant for easy storing of apache log data
+#   Class meant for easy storing of possible apache log data
 #
 # @Revision
 #   Author: Christopher L. Ranc
 #   Modified:
 #
 # @Internal variables
-#   remote_host_str
-#   remote_log_str
-#   remote_user
-#   date
-#   http_request
-#   last_request_time_int
-#   byte_count_int
-#   request_time_int
+#    self.remote_ip_str
+#    self.local_ip_str
+#    self.byte_count_nh_int
+#    self.byte_count_nhclf_int
+#    self.cookie_str
+#    self.request_time_int
+#    self.environment_var_str
+#    self.filename_str
+#    self.remote_host_str
+#    self.request_protocol_str
+#    self.header_line_str
+#    self.keep_alive_cnt_int
+#    self.remote_log_str
+#    self.request_method_str
+#    self.note_str
+#    self.reply_str
+#    self.port_str
+#    self.proc_id_str
+#    self.query_str
+#    self.http_line
+#    self.handler_str
+#    self.last_request_time_int
+#    self.time
+#    self.unit_str
+#    self.remote_user_str
+#    self.url_path
+#    self.request_server_name_str
+#    self.server_name_str
+#    self.connection_status_str
+#    self.bytes_recieved_int
+#    self.bytes_sent_int
+#    self.request_str
+#    self.response_str
 #
 # @Class Methods
 #
@@ -123,14 +148,73 @@ class HTTPLine(ParseStruct):
 #
 class ApacheLog:
     def __init__(self):
-        self.remote_host_str = None
-        self.remote_log_str = None
-        self.remote_user_str = None
-        self.date = None
-        self.http_request = None
-        self.last_request_time_int = None
-        self.byte_count_int = None
+        self.remote_ip_str = None
+
+        self.local_ip_str = None
+
+        self.byte_count_nh_int = None
+
+        self.byte_count_nhclf_int = None
+
+        self.cookie_str = None
+
         self.request_time_int = None
+
+        self.environment_var_str = None
+
+        self.filename_str = None
+
+        self.remote_host_str = None
+
+        self.request_protocol_str = None
+
+        self.header_line_str = None
+
+        self.keep_alive_cnt_int = None
+
+        self.remote_log_str = None
+
+        self.request_method_str = None
+
+        self.note_str = None
+
+        self.reply_str = None
+
+        self.port_str = None
+
+        self.proc_id_str = None
+
+        self.query_str = None
+
+        self.http_line = None
+
+        self.handler_str = None
+
+        self.last_request_time_int = None
+
+        self.time = None
+
+        self.unit_str = None
+
+        self.remote_user_str = None
+
+        self.url_path_str = None
+
+        self.request_server_name_str = None
+
+        self.server_name_str = None
+
+        self.connection_status_str = None
+
+        self.bytes_recieved_int = None
+
+        self.bytes_sent_int = None
+
+        self.request_str = None
+
+        self.response_str = None
+
+
 
 #
 # @Class
@@ -310,7 +394,6 @@ def parseFormatString( format_string ):
             delim_list.append( format_string[i] )
             i += 1
 
-    print(delim_list)
 
     return (delim_list, parser_list)
 
@@ -392,6 +475,114 @@ def appendParserList( input_str, parser_list, index ):
     return index
 
 
+
+
+def storeRemoteIP(rip_str, log) :
+    (log.remote_ip_str, i) = getString(rip_str)
+
+    return i
+
+
+def storeLocalIP(lip_str, log) :
+    (log.local_ip_str, i) = getString(lip_str)
+
+    return i
+
+
+#
+# @Prototype
+#   Function: storeByteCountNH()
+#   Example:  storeByteCountNH( bc_str, log )
+#
+# @Purpose
+#   This function stores the byte count of a request, without headers, as an
+#   integer into the given apache log object and returns the ending index of
+#   the parsed string.
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       bc_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
+#
+def storeByteCountNH( bc_str, log ):
+    (log.byte_count_nh_int, i) = getInt( bc_str )
+
+    return i
+
+
+#
+# @Prototype
+#   Function: storeByteCountNHCLF()
+#   Example:  storeByteCountNHCLF( bc_str, log )
+#
+# @Purpose
+#   This function stores the byte count of a request, without headers, as an
+#   integer into the given apache log object and returns the ending index of
+#   the parsed string.  If the value is 0 then a '-' is returned.
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       bc_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
+#
+def storeByteCountNHCLF( bc_str, log ):
+    (log.byte_count_nhclf_int, i) = getInt( bc_str )
+
+    return i
+
+
+def storeCookie(cookie_str, log, fb_str = None):
+    (log.cookie_str, i) = getString( cookie_str )
+
+    return i
+
+
+#
+# @Prototype
+#   Function: storeByteCount()
+#   Example:  storeByteCount( rt_str, log )
+#
+# @Purpose
+#   This function stores the request time as a integer into the given
+#   apache log object and returns the ending index of the parsed string
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       rt_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
+#
+def storeRequestTime( rt_str, log):
+    (log.request_time, i) = getInt( rt_str )
+
+    return i
+
+
+def storeEnvironVar(ev_str, log, fb_str = None):
+    (log.environment_var_str, i) = getString( ev_str )
+
+    return i
+
+
+def storeFilename( fn_str, log):
+    (log.filename_str, i) = getString( filename_str )
+
+    return i
+
 #
 # @Prototype
 #   Function: storeRemoteHost()
@@ -413,6 +604,24 @@ def appendParserList( input_str, parser_list, index ):
 #
 def storeRemoteHost( rh_str, log ):
     (log.remote_host, i) = getString(rh_str)
+
+    return i
+
+
+def storeRequestProtocol( rp_str, log) :
+    (log.request_protocol_str, i) = getString(rp_str)
+
+    return i
+
+
+def storeHeaderLine( hl_str, log ) :
+    (log.header_line_str, i) = getString( hl_str )
+
+    return i
+
+
+def storeKeepAliveCount( kac_str, log) :
+    (log.keep_alive_cnt_int, i) = getInt(kac_str)
 
     return i
 
@@ -441,14 +650,57 @@ def storeRemoteLog( rl_str, log ):
 
     return i
 
+
+def storeRequestMethod( rm_str, log ) :
+    (log.request_method_str, i) = getString(rm_str)
+
+    return i
+
+
+def storeNote( n_str, log, fb_str = None) :
+    (log.note_str, i) = getString(n_str)
+
+    return i
+
+
+def storeReply( r_str, log, fb_str = None) :
+    (log.reply_str, i) = getString(r_str)
+
+    return i
+
+
+def storePort( p_str, log, fb_str = None) :
+    (log.port_str, i) = getString(p_str)
+
+    return i
+
+
+def storeProcID( pid_str, log, fb_str = None) :
+    (log.proc_id_str, i) = getString(pid_str)
+
+    return i
+
+
+def storeQuery( q_str, log) :
+    (log.query_str, i) = getString(q_str)
+
+    return i
+
+
+#
+# Lambda function for checking if the characters are the valid characters
+# for the http version string
+#
+isHTTPChar = lambda x : x == 'H' or x == 'T' or x == 'P' or (x > '-' and x < ':')
+
 #
 # @Prototype
-#   Function: storeRemoteUser()
-#   Example:  storeRemoteUser( ru_str, log )
+#   Function: storeHTTPLine()
+#   Example:  storeHTTPLine( http_str, log )
 #
 # @Purpose
-#   This function stores the remote log string into the given apache log
-#   object and returns the ending index of the parsed string
+#   This function stores the http request string as a HTTPLine object into the
+#   given apache log object and returns the ending index of the parsed string
 #
 # @Revision
 #   Author: Christopher L. Ranc
@@ -456,14 +708,53 @@ def storeRemoteLog( rl_str, log ):
 #
 # @Notes:
 #   Input:
-#       ru_str : String for parsing
+#       http_str : String for parsing
 #   Output:
 #       i : ending index of parsed string value
 #
-def storeRemoteUser( ru_str, log ):
-    (log.remote_user, i) = getString(ru_str)
+def storeHTTPLine( http_str, log ) :
+    (method_str, i) = getString(http_str)
+    i += 1
+    (request_URI_str, ii) = getString(http_str[i:])
+    i += ii + 1
+    (http_vers_str, ii) = getString(http_str[i:], isHTTPChar)
+    i += ii
+
+    log.http_line = HTTPLine( method_str, request_URI_str, http_vers_str )
 
     return i
+
+
+
+def storeHandler( h_str, log ) :
+    (log.handler_str, i) = getString(h_str)
+
+    return i
+
+#
+# @Prototype
+#   Function: storeRequestTime()
+#   Example:  storeRequestTime( http_str, log )
+#
+# @Purpose
+#   This function stores the last request time as a integer into the given
+#   apache log object and returns the ending index of the parsed string
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       lrt_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
+#
+def storeLastRequestTime( lrt_str, log ):
+    (log.last_request_time, i) = getInt( lrt_str )
+
+    return i
+
 
 #
 # @Prototype
@@ -504,62 +795,34 @@ def storeTime( time_str, log, fb_str = None ):
     month_dict = { 'Jan' : 1, 'Feb': 2, 'Mar' : 3, 'Apr' : 4, 'May' : 5, 'Jun' : 6,
         'Jul' : 6, 'Aug' : 8, 'Sep' : 9, 'Oct' : 10, 'Nov' : 11, 'Dec' : 12 }
 
-    date = datetime(year=int(time_str[8:12]), month=month_dict[time_str[4:7]],
+    time = datetime(year=int(time_str[8:12]), month=month_dict[time_str[4:7]],
         day=int(time_str[1:3]), hour=int(time_str[13:15]),
         minute=int(time_str[16:18]), second=int(time_str[19:21]),
         tzinfo=FixedOffset(time_str[22:27]))
 
-    log.date = date
+    log.time = time
 
     i += 1
 
     return i
 
-#
-# Lambda function for checking if the characters are the valid characters
-# for the http version string
-#
-isHTTPChar = lambda x : x == 'H' or x == 'T' or x == 'P' or (x > '-' and x < ':')
 
-#
-# @Prototype
-#   Function: storeHTTPLine()
-#   Example:  storeHTTPLine( http_str, log )
-#
-# @Purpose
-#   This function stores the http request string as a HTTPLine object into the
-#   given apache log object and returns the ending index of the parsed string
-#
-# @Revision
-#   Author: Christopher L. Ranc
-#   Modified:
-#
-# @Notes:
-#   Input:
-#       http_str : String for parsing
-#   Output:
-#       i : ending index of parsed string value
-#
-def storeHTTPLine( http_str, log) :
-    (method_str, i) = getString(http_str)
-    i += 1
-    (request_URI_str, ii) = getString(http_str[i:])
-    i += ii + 1
-    (http_vers_str, ii) = getString(http_str[i:], isHTTPChar)
-    i += ii
 
-    log.httpRequest = HTTPLine( method_str, request_URI_str, http_vers_str )
+def storeUnit( u_str, log) :
+    (log.unit_str, log) = getString(u_str)
 
     return i
 
+
+
 #
 # @Prototype
-#   Function: storeHTTPLine()
-#   Example:  storeHTTPLine( http_str, log )
+#   Function: storeRemoteUser()
+#   Example:  storeRemoteUser( ru_str, log )
 #
 # @Purpose
-#   This function stores the last request time as a integer into the given
-#   apache log object and returns the ending index of the parsed string
+#   This function stores the remote log string into the given apache log
+#   object and returns the ending index of the parsed string
 #
 # @Revision
 #   Author: Christopher L. Ranc
@@ -567,60 +830,59 @@ def storeHTTPLine( http_str, log) :
 #
 # @Notes:
 #   Input:
-#       lrt_str : String for parsing
+#       ru_str : String for parsing
 #   Output:
 #       i : ending index of parsed string value
 #
-def storeLastRequestTime( lrt_str, log ):
-    (log.last_request_time, i) = getInt( lrt_str )
+def storeRemoteUser( ru_str, log ):
+    (log.remote_user, i) = getString(ru_str)
 
     return i
 
-#
-# @Prototype
-#   Function: storeByteCount()
-#   Example:  storeByteCount( bc_str, log )
-#
-# @Purpose
-#   This function stores the byte count as a integer into the given
-#   apache log object and returns the ending index of the parsed string
-#
-# @Revision
-#   Author: Christopher L. Ranc
-#   Modified:
-#
-# @Notes:
-#   Input:
-#       bc_str : String for parsing
-#   Output:
-#       i : ending index of parsed string value
-#
-def storeByteCount( bc_str, log ):
-    (log.byte_count, i) = getInt( bc_str )
+
+def storeURLPath(up_str, log) :
+    (log.url_path_str, i) = getString(up_str)
 
     return i
 
-#
-# @Prototype
-#   Function: storeByteCount()
-#   Example:  storeByteCount( rt_str, log )
-#
-# @Purpose
-#   This function stores the request time as a integer into the given
-#   apache log object and returns the ending index of the parsed string
-#
-# @Revision
-#   Author: Christopher L. Ranc
-#   Modified:
-#
-# @Notes:
-#   Input:
-#       rt_str : String for parsing
-#   Output:
-#       i : ending index of parsed string value
-#
-def storeRequestTime( rt_str, log):
-    (log.request_time, i) = getInt( rt_str )
+
+def storeRequestServerName(rsn_str, log) :
+    (log.request_server_name_str, i) = getString(rsn_str)
+
+    return i
+
+
+def storeServerName(sn_str, log) :
+    (log.server_name_str, log) = getString(sn_str)
+
+    return i
+
+
+def storeConnectionStatus(cs_str, log) :
+    (log.connection_status_str, i) = getString(cs_str)
+
+    return i
+
+
+def storeBytesRecieved(br_str, log) :
+    (log.bytes_recieved_int, i) = getInt(br_str)
+
+    return i
+
+
+def storeBytesSent(bs_str, log) :
+    (log.bytes_sent_int, i) = getInt(bs_str)
+
+    return i
+
+
+def storeRequest(req_str, log) :
+    (log.request_str, i) = getString(req_str, log)
+
+    return i
+
+def storeResponse(resp_str, log) :
+    (log.response_str, i) = getString(resp_str, log)
 
     return i
 
@@ -629,12 +891,37 @@ def storeRequestTime( rt_str, log):
 # Parse function dictionary referenced when building parser list
 #
 parse_func_dict = {
-  'h' :  storeRemoteHost,
-  'l' :  storeRemoteLog,
-  'u' :  storeRemoteUser,
-  't' :  storeTime,
-  'r' :  storeHTTPLine,
-  's' :  storeLastRequestTime,
-  'b' :  storeByteCount,
-  'D' :  storeRequestTime
+    'a'  : storeRemoteIP,
+    'A'  : storeLocalIP,
+    'B'  : storeByteCountNH,
+    'b'  : storeByteCountNHCLF,
+    'C'  : storeCookie,
+    'D'  : storeRequestTime,
+    'e'  : storeEnvironVar,
+    'f'  : storeFilename,
+    'h'  : storeRemoteHost,
+    'H'  : storeRequestProtocol,
+    'i'  : storeHeaderLine,
+    'k'  : storeKeepAliveCount,
+    'l'  : storeRemoteLog,
+    'm'  : storeRequestMethod,
+    'n'  : storeNote,
+    'o'  : storeReply,
+    'p'  : storePort,
+    'P'  : storeProcID,
+    'q'  : storeQuery,
+    'r'  : storeHTTPLine,
+    'R'  : storeHandler,
+    's'  : storeLastRequestTime,
+    't'  : storeTime,
+    'T'  : storeUnit,
+    'u'  : storeRemoteUser,
+    'U'  : storeURLPath,
+    'v'  : storeRequestServerName,
+    'V'  : storeServerName,
+    'X'  : storeConnectionStatus,
+    'I'  : storeBytesRecieved,
+    'O'  : storeBytesSent,
+    'ti' : storeRequest,
+    'to' : storeResponse
 }
