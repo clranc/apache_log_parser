@@ -55,9 +55,6 @@ class Parser:
         return log
 
 
-class ParseStruct(object):
-    def __init__(self, inVal=None):
-        self.val = inVal
 
 #
 # @Class
@@ -67,8 +64,8 @@ class ParseStruct(object):
 #   HTTPLine(method_str, request_URI_str, http_vers_str)
 #
 # @Purpose
-#   Required subclass to create a tzinfo object for offset needed by the
-#   date object
+#   Class for storing httpline components to easily use each
+#   portion of the http request line
 #
 # @Revision
 #   Author: Christopher L. Ranc
@@ -87,7 +84,7 @@ class ParseStruct(object):
 #       request_URI_str
 #       http_vers_str
 #
-class HTTPLine(ParseStruct):
+class HTTPLine:
     def __init__(self, method_str, request_URI_str, http_version_str):
         self.method_str = method_str
         self.request_URI_str = request_URI_str
