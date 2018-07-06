@@ -375,7 +375,7 @@ def parseFormatString( format_string ):
         if format_string[i] == '%':
             i += 1
 
-            # Check if this is % sign that can be added to the delimiter list
+            # Check if this is a % sign that can be added to the delimiter list
             if format_string[i] =='%':
                 delim_list.append( format_string[i] )
                 i += 1
@@ -473,13 +473,49 @@ def appendParserList( input_str, parser_list, index ):
 
 
 
-
+#
+# @Prototype
+#   Function: storeRemoteIP()
+#   Example:  storeRemoteIP( rip_str, log )
+#
+# @Purpose
+#   This function stores the remote ip string into the given apache log
+#   object and returns the ending index of the parsed string
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       rip_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
 def storeRemoteIP(rip_str, log) :
     (log.remote_ip_str, i) = getString(rip_str)
 
     return i
 
 
+#
+# @Prototype
+#   Function: storeLocalIP()
+#   Example:  storeLocalIP( lip_str, log )
+#
+# @Purpose
+#   This function stores the local ip string into the given apache log
+#   object and returns the ending index of the parsed string
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       lip_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
+#
 def storeLocalIP(lip_str, log) :
     (log.local_ip_str, i) = getString(lip_str)
 
@@ -537,7 +573,25 @@ def storeByteCountNHCLF( bc_str, log ):
 
     return i
 
-
+#
+# @Prototype
+#   Function: storeCookie()
+#   Example:  storeCookie( cookie_str, log )
+#
+# @Purpose
+#   This function stores the cookie string into the given apache log
+#   object and returns the ending index of the parsed string
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       cookie_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
+#
 def storeCookie(cookie_str, log, fb_str = None):
     (log.cookie_str, i) = getString( cookie_str )
 
@@ -568,13 +622,49 @@ def storeRequestTime( rt_str, log):
 
     return i
 
-
+#
+# @Prototype
+#   Function: storeEnvironVar()
+#   Example:  storeEnvironVar( ev_str, log )
+#
+# @Purpose
+#   This function stores the environment variable string into the given apache
+#   log object and returns the ending index of the parsed string
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       ev_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
+#
 def storeEnvironVar(ev_str, log, fb_str = None):
     (log.environment_var_str, i) = getString( ev_str )
 
     return i
 
-
+#
+# @Prototype
+#   Function: storeFilename()
+#   Example:  storeFilename( fn_str, log )
+#
+# @Purpose
+#   This function stores the filename string into the given apache log
+#   object and returns the ending index of the parsed string
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       fn_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
+#
 def storeFilename( fn_str, log):
     (log.filename_str, i) = getString( filename_str )
 
@@ -604,19 +694,74 @@ def storeRemoteHost( rh_str, log ):
 
     return i
 
-
+#
+# @Prototype
+#   Function: storeRequestProtocol()
+#   Example:  storeRequestProtocol( rp_str, log )
+#
+# @Purpose
+#   This function stores the request protocol string into the given apache log
+#   object and returns the ending index of the parsed string
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       rp_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
+#
 def storeRequestProtocol( rp_str, log) :
     (log.request_protocol_str, i) = getString(rp_str)
 
     return i
 
-
+#
+# @Prototype
+#   Function: storeHeaderLine()
+#   Example:  storeHeaderLine( hl_str, log )
+#
+# @Purpose
+#   This function stores the headerline string into the given apache log
+#   object and returns the ending index of the parsed string
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       hl_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
+#
 def storeHeaderLine( hl_str, log ) :
     (log.header_line_str, i) = getString( hl_str )
 
     return i
 
 
+#
+# @Prototype
+#   Function: storeKeepAliveCount()
+#   Example:  storeKeepAliveCount( kac_str, log )
+#
+# @Purpose
+#   This function stores the keep alive count string into the given apache log
+#   object as an integer and returns the ending index of the parsed string
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       kac_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
+#
 def storeKeepAliveCount( kac_str, log) :
     (log.keep_alive_cnt_int, i) = getInt(kac_str)
 
@@ -647,37 +792,145 @@ def storeRemoteLog( rl_str, log ):
 
     return i
 
-
+#
+# @Prototype
+#   Function: storeRequestMethod()
+#   Example:  storeRequestMethod( rm_str, log )
+#
+# @Purpose
+#   This function stores the request method string into the given apache log
+#   object and returns the ending index of the parsed string
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       rm_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
+#
 def storeRequestMethod( rm_str, log ) :
     (log.request_method_str, i) = getString(rm_str)
 
     return i
 
-
-def storeNote( n_str, log, fb_str = None) :
-    (log.note_str, i) = getString(n_str)
+#
+# @Prototype
+#   Function: storeNote()
+#   Example:  storeNote( note_str, log )
+#
+# @Purpose
+#   This function stores the note string into the given apache log
+#   object and returns the ending index of the parsed string
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       note_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
+#
+def storeNote( note_str, log, fb_str = None) :
+    (log.note_str, i) = getString(note_str)
 
     return i
 
-
+#
+# @Prototype
+#   Function: storeReply()
+#   Example:  storeReply( rep_str, log )
+#
+# @Purpose
+#   This function stores the reply string into the given apache log
+#   object and returns the ending index of the parsed string
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       rep_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
+#
 def storeReply( r_str, log, fb_str = None) :
     (log.reply_str, i) = getString(r_str)
 
     return i
 
-
-def storePort( p_str, log, fb_str = None) :
-    (log.port_str, i) = getString(p_str)
+#
+# @Prototype
+#   Function: storePort()
+#   Example:  storePort( port_str, log )
+#
+# @Purpose
+#   This function stores the port string into the given apache log
+#   object and returns the ending index of the parsed string
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       port_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
+#
+def storePort( port_str, log, fb_str = None) :
+    (log.port_str, i) = getString(port_str)
 
     return i
 
-
+#
+# @Prototype
+#   Function: storeProcID()
+#   Example:  storeProcID( pid_str, log )
+#
+# @Purpose
+#   This function stores the process id string into the given apache log
+#   object and returns the ending index of the parsed string
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       pid_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
+#
 def storeProcID( pid_str, log, fb_str = None) :
     (log.proc_id_str, i) = getString(pid_str)
 
     return i
 
-
+#
+# @Prototype
+#   Function: storeQuery()
+#   Example:  storeQuery( q_str, log )
+#
+# @Purpose
+#   This function stores the query string into the given apache log
+#   object and returns the ending index of the parsed string
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       q_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
+#
 def storeQuery( q_str, log) :
     (log.query_str, i) = getString(q_str)
 
@@ -836,48 +1089,193 @@ def storeRemoteUser( ru_str, log ):
 
     return i
 
-
+#
+# @Prototype
+#   Function: storeURLPath()
+#   Example:  storeURLPath( up_str, log )
+#
+# @Purpose
+#   This function stores the URL path string into the given apache log
+#   object and returns the ending index of the parsed string
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       up_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
+#
 def storeURLPath(up_str, log) :
     (log.url_path_str, i) = getString(up_str)
 
     return i
 
-
+#
+# @Prototype
+#   Function: storeRequestServerName()
+#   Example:  storeRequestServerName( rsn_str, log )
+#
+# @Purpose
+#   This function stores the request server name string into the given apache
+#   log object and returns the ending index of the parsed string
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       rsn_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
+#
 def storeRequestServerName(rsn_str, log) :
     (log.request_server_name_str, i) = getString(rsn_str)
 
     return i
 
-
+#
+# @Prototype
+#   Function: storeServerName()
+#   Example:  storeServerName( sn_str, log )
+#
+# @Purpose
+#   This function stores the server name string into the given apache
+#   log object and returns the ending index of the parsed string
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       sn_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
+#
 def storeServerName(sn_str, log) :
     (log.server_name_str, log) = getString(sn_str)
 
     return i
 
-
+#
+# @Prototype
+#   Function: storeConnectionStatus()
+#   Example:  storeConnectionStatus( cs_str, log )
+#
+# @Purpose
+#   This function stores the connection status string into the given apache
+#   log object and returns the ending index of the parsed string
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       cs_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
+#
 def storeConnectionStatus(cs_str, log) :
     (log.connection_status_str, i) = getString(cs_str)
 
     return i
 
-
+#
+# @Prototype
+#   Function: storeBytesRecieved()
+#   Example:  storeBytesRecieved( br_str, log )
+#
+# @Purpose
+#   This function stores the bytes recieved string into the given apache
+#   log object as an integer and returns the ending index of the parsed string
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       br_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
+#
 def storeBytesRecieved(br_str, log) :
     (log.bytes_recieved_int, i) = getInt(br_str)
 
     return i
 
-
+#
+# @Prototype
+#   Function: storeBytesSent()
+#   Example:  storeBytesSent( bs_str, log )
+#
+# @Purpose
+#   This function stores the bytes sent string into the given apache log
+#   object as an integer and returns the ending index of the parsed string
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       br_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
+#
 def storeBytesSent(bs_str, log) :
     (log.bytes_sent_int, i) = getInt(bs_str)
 
     return i
 
-
+#
+# @Prototype
+#   Function: storeRequest()
+#   Example:  storeRequest( req_str, log )
+#
+# @Purpose
+#   This function stores the request string into the given apache log
+#   object and returns the ending index of the parsed string
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       br_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
+#
 def storeRequest(req_str, log) :
     (log.request_str, i) = getString(req_str, log)
 
     return i
 
+#
+# @Prototype
+#   Function: storeResponse()
+#   Example:  storeResponse( resp_str, log )
+#
+# @Purpose
+#   This function stores the response string into the given apache log
+#   object and returns the ending index of the parsed string
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes:
+#   Input:
+#       resp_str : String for parsing
+#   Output:
+#       i : ending index of parsed string value
+#
 def storeResponse(resp_str, log) :
     (log.response_str, i) = getString(resp_str, log)
 
