@@ -1032,6 +1032,10 @@ def storeLastRequestTime( lrt_str, log ):
 #     0123456789012345678901234567 <--- make sense of.  Index 2 --> 27
 #     [00/Sep/2012:06:05:11 +0000]                            7
 #
+#   **** Needs functionality for parsing format bracket string for
+#        for custom time formats if the default isn't used
+#
+#
 def storeTime( time_str, log, fb_str = None ):
     i = 0
 
