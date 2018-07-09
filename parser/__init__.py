@@ -9,7 +9,7 @@ import re
 #   Parser( format_str )
 #
 # @Purpose
-#   Parser class for constructing a
+#   Parser class for constructing an apache log
 #
 # @Revision
 #   Author: Christopher L. Ranc
@@ -341,6 +341,66 @@ def getInt(input_string):
 
 #
 # @Prototype
+#   Function: getEscDelim
+#   Example: getEscDelim( delim_chr )
+#
+# @Purpose
+#   This helper function is to be used by parseFormatString for correctly
+#   determing hard written escaped characters from the format string to
+#   be returned and added to the delim_list built by parseFormatString.
+#
+# @Revision
+#   Author: Christopher L. Ranc
+#   Modified:
+#
+# @Notes
+#   Input:
+#       delim_chr : Delimiting character to be checked to see what escaped
+#                   character it is
+#   Output:
+#       Returns the correct delimiting escaped character for the delim_list
+#
+def getEscDelim( delim_chr ):
+
+    # Return Tab as a delimiter
+    if delim_chr == "t":
+        return "\t"
+
+    # Return Veritcal Tab as a delimiter
+    elif delim_chr == "v":
+        return "\v"
+
+    # Return Bell as a delimiter cause why not have audible tones as delimiters
+    elif delim_chr == "a":
+        return "\a"
+
+    # Return Back Space as a delimiter because you can use that
+    elif delim_chr == "b":
+        return "\b"
+
+    # Return Form Feed as a delimiter because why not have page seperators
+    # as delimitors
+    elif delim_chr == "f":
+        return "\f"
+
+    # Return Carriage Return as a delimiter
+    elif delim_chr == "r":
+        return "\r"
+
+    # Other hard written escaped characters in the format string like \, ",
+    # or ' will work correctly when returned.  Newlines, \n, or worse Null
+    # terminators, \0, should be avoided cause they will mess with the file
+    # reading and parsing. Since the whole log entyr is expected to be on a
+    # newline and Null terminators break reading a file in general.
+    #
+    # If someone wants to use those in the format string please yell at them.
+    #
+    else:
+        return delim_chr
+
+
+#
+# @Prototype
 #   Function: parseFormatString()
 #   Example:  parseFormatString( format_string, log )
 #
@@ -382,8 +442,13 @@ def parseFormatString( format_string ):
             else:
                 i = appendParserList( format_string, parser_list, i )
 
-        # Check to skip back slashes for escaped characters
+        # Check for back slashes to identify escaped characters
         elif format_string[i] == '\\':
+            i += 1
+
+            delim_chr = getEscDelim( format_string[i] )
+            delim_list.append( delim_chr )
+
             i += 1
 
         # Append to delimiter list
